@@ -14,22 +14,26 @@ function signUpHandler() {
   let password  = document.getElementById('passwordInput').value
   let pswdConfirmation = document.getElementById('confirmPswdInput').value
   let valid = true
-  for(let i = 0; i < users.length; i++) {
-    if(users[i].username !== username) {
-      valid = false
-      alert("username already taken")
-      break;
+  if(username !== "" && password !== "" && pswdConfirmation !== "") {
+    for(let i = 0; i < users.length; i++) {
+      console.log(i)
+      if(users[i].name === username) {
+        valid = false
+        alert("username already taken")
+        break;
+      }
     }
-  }
-
-  if(valid) {
-    if(password === pswdConfirmation) {
-      users.push(newUser(username, password))
-      save()
-      alert("Signed up!")
-    } else {
-      alert("both passwords must be identical")
+    if(valid) {
+      if(password === pswdConfirmation) {
+        users.push(newUser(username, password))
+        save()
+        alert("Signed up!")
+      } else {
+        alert("both passwords must be identical")
+      }
     }
+  } else {
+    alert("all required fields must be filled")
   }
 }
 
@@ -50,15 +54,18 @@ function save() {
 function signInHandler() {
   let username = document.getElementById('usernameInput').value
   let password  = document.getElementById('passwordInput').value
+  let valid = false
+  console.log(password)
   for(let i = 0; i < users.length; i++) {
-    if(username === users[i].name) {
-      if(password !== users[i].password) {
-        alert("Not a valid password")
-        break;
-      } else {
-        alert("Success!")
-      }
+    console.log(users[i].password)
+    if(username === users[i].name && password === users[i].password) {
+      alert("Success!")
+      valid = true
+      break;
     }
   }
-  
+
+  if(!valid) {
+    alert("Wrong!")
+  }
 }
